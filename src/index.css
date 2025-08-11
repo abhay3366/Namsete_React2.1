@@ -1,3 +1,8 @@
+*{
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
 /* Navbar Container */
 .header {
   display: flex;
@@ -39,6 +44,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
+  margin-bottom: 20px;
 }
   .res-card {
   width: 300px;
