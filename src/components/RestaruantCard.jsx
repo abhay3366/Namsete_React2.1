@@ -1,8 +1,7 @@
 import { API_URL } from "../utils/contants";
 
 const RestaurantCard = (props) => {
-  console.log(props);
-  const { resData } = props;
+ const { resData } = props;
   const {cloudinaryImageId,name,cuisines,avgRating,aggregatedDiscountInfoV3} = resData?.info;
   const price = aggregatedDiscountInfoV3?.subHeader;
 
