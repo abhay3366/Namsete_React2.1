@@ -43,6 +43,7 @@ const Body = () => {
           <input
             type="text"
             name="search"
+            placeholder="Search"
             value={searchData}
             onChange={(e) => {
               const value = e.target.value;
