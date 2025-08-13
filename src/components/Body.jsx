@@ -19,8 +19,10 @@ const Body = () => {
       response?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants
     );
-    setfilterResturant(response?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants); // Show all initially
+    setfilterResturant(
+      response?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants
+    ); // Show all initially
   };
 
   if (listofRestaurants.length == 0) {
@@ -43,14 +45,30 @@ const Body = () => {
             name="search"
             value={searchData}
             onChange={(e) => {
-              setsearchData(e.target.value);
+              const value = e.target.value;
+              setsearchData(value); // update state
+
+              if (value.trim() === "") {
+                setfilterResturant(listofRestaurants);
+                return;
+              } else {
+                const filteredDataRestuarnt = listofRestaurants.filter(
+                  (res) => {
+                    return res.info.name
+                      .toLowerCase()
+                      .includes(value.toLowerCase());
+                  }
+                );
+
+                setfilterResturant(filteredDataRestuarnt);
+              }
             }}
             className="search-box"
             id=""
             style={{ lineHeight: "15px" }}
-          />{" "}
+          />
           &nbsp;
-          <button
+          {/* <button
             onClick={(e) => {
               setsearchData(e.target.value);
               const filteredDataRestuarnt = listofRestaurants.filter((res) => {
@@ -63,15 +81,19 @@ const Body = () => {
             }}
           >
             Search
-          </button>
+          </button> */}
         </div>
         <button
           className="filter-btn"
           onClick={() => {
             const filterData = listofRestaurants.filter(
-              (res) => res.info.avgRating < 4.5
+              (res) => {
+                console.log(res)
+                return res.info.avgRating > 4.5
+              }
             );
-            setlistofRestaurants(filterData);
+            console.log(filterData)
+            setfilterResturant(filterData);
           }}
         >
           Top Rated Resturant
