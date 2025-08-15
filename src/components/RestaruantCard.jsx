@@ -23,4 +23,19 @@ const RestaurantCard = (props) => {
   );
 };
 
+// high order component
+
+export const withGoodRatingLabel=(RestaruantCard)=>{
+  return (props)=>{
+    return(
+      <div>
+        <h1>Good Rating</h1>
+        <RestaruantCard resData={props.resData}/>
+      </div>
+    )
+  }
+}
+
+// input-resturantCard->resturantCardPromated
+
 export default RestaurantCard;

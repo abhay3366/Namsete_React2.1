@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 // import resList from "../utils/mockData";
-import RestaurantCard from "./RestaruantCard";
+import RestaurantCard, { withGoodRatingLabel } from "./RestaruantCard";
 import { API } from "../utils/contants";
 import ShimmerCard from "./ShimmerCard";
 import { Link } from "react-router-dom";
@@ -13,14 +13,16 @@ const Body = () => {
   const [filterResturant, setfilterResturant] = useState([]);
   const onlineStatus = useOnlineStatus();
 
+  // Higher order component
+  const ResturantGoodRating = withGoodRatingLabel(RestaurantCard);
+
   useEffect(() => {
     if (onlineStatus == true) {
       fetchData();
-    }else{
-      <h1>not con</h1>
+    } else {
+      <h1>not con</h1>;
     }
   }, [onlineStatus]);
-
 
   const fetchData = async () => {
     const data = await fetch(API);
@@ -35,9 +37,9 @@ const Body = () => {
     ); // Show all initially
   };
 
- if(!onlineStatus){
-    return <NotConnectedInternet/>
- }
+  if (!onlineStatus) {
+    return <NotConnectedInternet />;
+  }
 
   if (listofRestaurants.length == 0) {
     return <ShimmerCard />;
@@ -113,13 +115,17 @@ const Body = () => {
         </button>
       </div>
       <div className="res-container">
-        {filterResturant.map((res, index) => (
-          // console.log(res)
+        {filterResturant.map((res, index) => {
+          
 
-          <Link to={"/restaurant/" + res.info.id}>
-            <RestaurantCard key={index} resData={res} />
-          </Link>
-        ))}
+          return (
+            <Link to={"/restaurant/" + res.info.id} key={res.info.id || index}>
+              {
+              res.info.avgRating>4.4 ? <ResturantGoodRating resData={res}/> : <RestaurantCard resData={res} />
+              }
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
