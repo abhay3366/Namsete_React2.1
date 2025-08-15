@@ -13,7 +13,7 @@ const RestaurantCard = (props) => {
         className="res-image"
       />
       <div className="res-content">
-        <h3 className="res-title">{name}</h3>
+        <h3 className="text-2xl font-bold">{name}</h3>
         <h5 className="res-rating">⭐ {avgRating}</h5>
         <h6 className="res-price">💰 {price}</h6>
         <p className="res-description">{cuisines.join(", ")}</p>

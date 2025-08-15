@@ -4,15 +4,24 @@ import RestaurantCard from "./RestaruantCard";
 import { API } from "../utils/contants";
 import ShimmerCard from "./ShimmerCard";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
+import NotConnectedInternet from "./NotConnectedInternet";
 
 const Body = () => {
   const [listofRestaurants, setlistofRestaurants] = useState([]);
   const [searchData, setsearchData] = useState("");
   const [filterResturant, setfilterResturant] = useState([]);
+  const onlineStatus = useOnlineStatus();
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (onlineStatus == true) {
+      fetchData();
+    }else{
+      <h1>not con</h1>
+    }
+  }, [onlineStatus]);
+
+
   const fetchData = async () => {
     const data = await fetch(API);
     const response = await data.json();
@@ -25,6 +34,10 @@ const Body = () => {
         ?.restaurants
     ); // Show all initially
   };
+
+ if(!onlineStatus){
+    return <NotConnectedInternet/>
+ }
 
   if (listofRestaurants.length == 0) {
     return <ShimmerCard />;
@@ -88,13 +101,11 @@ const Body = () => {
         <button
           className="filter-btn"
           onClick={() => {
-            const filterData = listofRestaurants.filter(
-              (res) => {
-                console.log(res)
-                return res.info.avgRating > 4.5
-              }
-            );
-            console.log(filterData)
+            const filterData = listofRestaurants.filter((res) => {
+              console.log(res);
+              return res.info.avgRating > 4.5;
+            });
+            console.log(filterData);
             setfilterResturant(filterData);
           }}
         >
@@ -104,8 +115,10 @@ const Body = () => {
       <div className="res-container">
         {filterResturant.map((res, index) => (
           // console.log(res)
-          
-          <Link to={'/restaurant/'+res.info.id}><RestaurantCard key={index} resData={res} /></Link>
+
+          <Link to={"/restaurant/" + res.info.id}>
+            <RestaurantCard key={index} resData={res} />
+          </Link>
         ))}
       </div>
     </div>

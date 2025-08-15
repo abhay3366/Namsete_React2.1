@@ -1,30 +1,11 @@
-import React, { useEffect, useState } from "react";
 import ShimmerCard from "./ShimmerCard";
 import { useParams } from "react-router-dom";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
 
 const ResturantMenuPage = () => {
-  const [resInfo, setRestInfo] = useState(null);
   const { id } = useParams(); // 'id' comes from the :id in your route path
 
-  console.log("Restaurant ID:", id);
-
-  useEffect(() => {
-    if (id) {
-      fetchData();
-    }
-  }, [id]);
-
-  const fetchData = async () => {
-    try {
-      const res = await fetch(
-        `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9939369&lng=77.5980282&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`
-      );
-      const response = await res.json();
-      setRestInfo(response);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  const resInfo = useRestaurantMenu(id);
 
   // Show shimmer while loading
   if (!resInfo) {
@@ -60,8 +41,7 @@ const ResturantMenuPage = () => {
 
           {/* Cuisines */}
           <div className="cuisines">
-            <a href="#">{data.name}</a>
-            , <a href="#">Asian</a>
+            <a href="#">{data.name}</a>, <a href="#">Asian</a>
           </div>
 
           <div className="divider"></div>
@@ -112,7 +92,9 @@ const ResturantMenuPage = () => {
         >
           <div>
             <h3>{el.card.info.name}</h3>
-            <h3>Rs. {(el.card.info.price || el.card.info.defaultPrice) / 100}</h3>
+            <h3>
+              Rs. {(el.card.info.price || el.card.info.defaultPrice) / 100}
+            </h3>
             <p>{el.card.info.description}</p>
           </div>
           <div>

@@ -8,6 +8,10 @@ import Contact from "./components/Contact";
 import News from "./components/News";
 import Error from "./components/Error";
 import ResturantMenuPage from "./components/ResturantMenuPage";
+// import Grocerry from "./components/Grocerry";
+import { lazy, Suspense } from "react";
+
+const Grocerry=lazy(()=>import("./components/Grocerry"))
 
 const AppLayout = () => {
   return (
@@ -22,32 +26,41 @@ const AppLayout = () => {
 const appRouter = createBrowserRouter([
   {
     path: "/",
-    Component: AppLayout,
+    element: <AppLayout />,
     children: [
       {
-        path:"/",
-        Component:Body,
+        path: "/",
+        element: <Body />,
       },
       {
         path: "/about",
-        Component: About,
+        element: <About />,
       },
       {
         path: "/contact",
-        Component: Contact,
+        element: <Contact />,
       },
       {
         path: "/news",
-        Component: News,
+        element: <News />,
       },
       {
-        path:"/restaurant/:id",
-        Component:ResturantMenuPage
-      }
+        path: "/grocerry",
+        element: (
+          <Suspense fallback={<h1>Loading..</h1>}>
+            <Grocerry />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/restaurant/:id",
+        element: <ResturantMenuPage />,
+      },
     ],
     errorElement: <Error />,
   },
 ]);
+
 
 const App = () => {
   return <RouterProvider router={appRouter} />;
