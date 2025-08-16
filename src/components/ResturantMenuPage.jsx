@@ -1,11 +1,14 @@
 import ShimmerCard from "./ShimmerCard";
 import { useParams } from "react-router-dom";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
+import TopPickCard from "./TopPickCard";
+import RecommendedCard from "./RecommendedCard";
 
 const ResturantMenuPage = () => {
   const { id } = useParams(); // 'id' comes from the :id in your route path
 
   const resInfo = useRestaurantMenu(id);
+  //
 
   // Show shimmer while loading
   if (!resInfo) {
@@ -14,9 +17,22 @@ const ResturantMenuPage = () => {
 
   const data = resInfo?.data?.cards?.[2]?.card?.card?.info || {};
   const itemCards =
-    resInfo?.data?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.[1]
+    resInfo?.data?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.[2]
       ?.card?.card?.itemCards || [];
 
+  const itemCards1 =
+    resInfo?.data?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards || [];
+  // console.log("itemCards1",itemCards1)
+
+  const recommendedArray = itemCards1.filter(
+    (el) => el.card.card.title == "Recommended"
+  );
+  // console.log("recommendedArray", recommendedArray[0].card.card.itemCards);
+
+  const topPick =
+    resInfo?.data?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1].card
+      .card.carousel || [];
+  //
   return (
     <div>
       <nav className="tabs" aria-label="Menu">
@@ -77,34 +93,28 @@ const ResturantMenuPage = () => {
           </div>
         </div>
       </section>
-
-      <hr />
-
-      {itemCards.map((el, index) => (
+      {/* //---------------------------Top Pick ------------------------------------ */}
+      <section>
+        <h1 className="text-3xl pl-5">Top Pick</h1>
         <div
-          key={index}
-          style={{
-            display: "flex",
-            border: "1px solid red",
-            width: "60%",
-            margin: "auto",
-          }}
+          className="w-[70%] mx-auto flex flex-row gap-6 p-6 h-full overflow-x-auto no-scrollbar"
+          style={{ margin: "auto" }}
         >
-          <div>
-            <h3>{el.card.info.name}</h3>
-            <h3>
-              Rs. {(el.card.info.price || el.card.info.defaultPrice) / 100}
-            </h3>
-            <p>{el.card.info.description}</p>
-          </div>
-          <div>
-            <img
-              src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${el.card.info.imageId}`}
-              alt={el.card.info.name}
-            />
-          </div>
+          {topPick.map((res, index) => (
+            <div key={index} className="flex-shrink-0">
+              <TopPickCard topPickData={res} />
+            </div>
+          ))}
         </div>
-      ))}
+      </section>
+
+      {/* // ------------------------------------End top pick------------------------------ */}
+
+      {/*-----------------------------------------Recommended------------------------------------- */}
+      {/* {recommendedArray[0].card.card.map((response, index) => ( */}
+        <RecommendedCard  recommendedRes={recommendedArray[0].card.card} />
+      {/* ))} */}
+      {/*-----------------------------------------End Recommended------------------------------------- */}
     </div>
   );
 };

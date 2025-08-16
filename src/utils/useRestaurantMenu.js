@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-
 const useRestaurantMenu = (id) => {
   const [resInfo, setRestInfo] = useState(null);
+
+
   useEffect(() => {
     if (id) {
       fetchData();
     }
   }, [id]);
-
   const fetchData = async () => {
     try {
       const res = await fetch(
@@ -19,8 +19,6 @@ const useRestaurantMenu = (id) => {
       console.error("Error fetching data:", error);
     }
   };
-
   return resInfo;
 };
-
 export default useRestaurantMenu;
