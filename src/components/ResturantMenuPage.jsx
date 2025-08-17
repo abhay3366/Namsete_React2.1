@@ -24,9 +24,15 @@ const ResturantMenuPage = () => {
     resInfo?.data?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards || [];
   // console.log("itemCards1",itemCards1)
 
+  // const recommendedArray = itemCards1.filter(
+  //   (el) => el.card.card.title == "Recommended"
+  // );
   const recommendedArray = itemCards1.filter(
-    (el) => el.card.card.title == "Recommended"
+    (el) =>
+      el.card.card["@type"] ==
+      "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
   );
+  console.log("recommendedArray", recommendedArray);
   // console.log("recommendedArray", recommendedArray[0].card.card.itemCards);
 
   const topPick =
@@ -112,7 +118,8 @@ const ResturantMenuPage = () => {
 
       {/*-----------------------------------------Recommended------------------------------------- */}
       {/* {recommendedArray[0].card.card.map((response, index) => ( */}
-        <RecommendedCard  recommendedRes={recommendedArray[0].card.card} />
+      {/* <RecommendedCard  recommendedRes={recommendedArray[0].card.card} /> */}
+      <RecommendedCard recommendedRes={recommendedArray} />
       {/* ))} */}
       {/*-----------------------------------------End Recommended------------------------------------- */}
     </div>
