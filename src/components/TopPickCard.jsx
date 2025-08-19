@@ -1,15 +1,10 @@
-import React from "react";
-
 const TopPickCard = ({ topPickData }) => {
-  
   const { creativeId } = topPickData;
-//   const { name, description, price } = topPickData.dish.info;
+  //   const { name, description, price } = topPickData.dish.info;
 
   return (
     <div className=" w-full  flex items-center justify-center">
-        
       <div className="relative rounded-2xl overflow-hidden  shadow-xl ring-1 ring-neutral-700/60 hover:shadow-2xl transition-all">
-       
         <div className="relative aspect-[4/3]">
           <img
             src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_292,h_300/${creativeId}?`}

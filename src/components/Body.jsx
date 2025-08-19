@@ -104,10 +104,10 @@ const Body = () => {
           className="filter-btn"
           onClick={() => {
             const filterData = listofRestaurants.filter((res) => {
-              console.log(res);
+              // console.log(res);
               return res.info.avgRating > 4.5;
             });
-            console.log(filterData);
+            // console.log(filterData);
             setfilterResturant(filterData);
           }}
         >
@@ -116,13 +116,13 @@ const Body = () => {
       </div>
       <div className="res-container">
         {filterResturant.map((res, index) => {
-          
-
           return (
             <Link to={"/restaurant/" + res.info.id} key={res.info.id || index}>
-              {
-              res.info.avgRating>4.4 ? <ResturantGoodRating resData={res}/> : <RestaurantCard resData={res} />
-              }
+              {res.info.avgRating > 4.4 ? (
+                <ResturantGoodRating resData={res} />
+              ) : (
+                <RestaurantCard resData={res} />
+              )}
             </Link>
           );
         })}

@@ -32,7 +32,7 @@ const ResturantMenuPage = () => {
       el.card.card["@type"] ==
       "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
   );
-  console.log("recommendedArray", recommendedArray);
+  // console.log("recommendedArray", recommendedArray);
   // console.log("recommendedArray", recommendedArray[0].card.card.itemCards);
 
   const topPick =

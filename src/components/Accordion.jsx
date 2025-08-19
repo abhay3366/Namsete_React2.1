@@ -1,10 +1,12 @@
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartSlice";
 
 const Accordion = ({ itemCards,openIndex1,index }) => {
 //   console.log("item",index)
+const dispatch=useDispatch()
   return (
     <div>
       {openIndex1 == 1 &&
-      
         itemCards.map((item, i) => (
           <div key={i} className="mb-4 border rounded-lg shadow">
             <div className="flex justify-between gap-6 border-t p-4">
@@ -23,6 +25,9 @@ const Accordion = ({ itemCards,openIndex1,index }) => {
                   className="w-full h-full object-cover rounded-lg"
                 />
               </div>
+              <button onClick={()=>(
+                dispatch(addItem(item))
+              )}>Cart</button>
             </div>
           </div>
         ))}

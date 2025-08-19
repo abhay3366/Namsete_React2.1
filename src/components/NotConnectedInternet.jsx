@@ -1,6 +1,3 @@
-import React from "react";
-
-
 const NotConnectedInternet = () => {
   return (
     <div
@@ -17,7 +14,6 @@ const NotConnectedInternet = () => {
         padding: "20px"
       }}
     >
-      
       <h1 style={{ marginTop: "20px", fontSize: "28px", fontWeight: "bold" }}>
         No Internet Connection
       </h1>

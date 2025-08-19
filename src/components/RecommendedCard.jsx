@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Accordion from "./Accordion";
 const RecommendedCard = ({ recommendedRes }) => {
-  console.log("rec", recommendedRes);
+  // console.log("rec", recommendedRes);
   //   const { itemCards, title } = recommendedRes;
 
   const [openIndex1, setOpenIndex1] = useState(0);

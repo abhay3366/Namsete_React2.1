@@ -8,8 +8,8 @@ import Contact from "./components/Contact";
 import News from "./components/News";
 import Error from "./components/Error";
 import ResturantMenuPage from "./components/ResturantMenuPage";
-// import Grocerry from "./components/Grocerry";
 import { lazy, Suspense } from "react";
+import Cart from "./components/Cart";
 
 const Grocerry=lazy(()=>import("./components/Grocerry"))
 
@@ -43,6 +43,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/news",
         element: <News />,
+      },
+       {
+        path: "/cart",
+        element: <Cart />,
       },
       {
         path: "/grocerry",
