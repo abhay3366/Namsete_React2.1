@@ -1,10 +1,8 @@
 import { API_URL } from "../utils/contants";
-
 const RestaurantCard = (props) => {
  const { resData } = props;
   const {cloudinaryImageId,name,cuisines,avgRating,aggregatedDiscountInfoV3} = resData?.info;
   const price = aggregatedDiscountInfoV3?.subHeader;
-
   return (
     <div className="res-card">
       <img
@@ -22,9 +20,7 @@ const RestaurantCard = (props) => {
     </div>
   );
 };
-
 // high order component
-
 export const withGoodRatingLabel=(RestaruantCard)=>{
   return (props)=>{
     return(
@@ -35,7 +31,5 @@ export const withGoodRatingLabel=(RestaruantCard)=>{
     )
   }
 }
-
 // input-resturantCard->resturantCardPromated
-
 export default RestaurantCard;

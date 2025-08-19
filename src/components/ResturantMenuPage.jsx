@@ -3,27 +3,21 @@ import { useParams } from "react-router-dom";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
 import TopPickCard from "./TopPickCard";
 import RecommendedCard from "./RecommendedCard";
-
 const ResturantMenuPage = () => {
   const { id } = useParams(); // 'id' comes from the :id in your route path
-
   const resInfo = useRestaurantMenu(id);
   //
-
   // Show shimmer while loading
   if (!resInfo) {
     return <ShimmerCard />;
   }
-
   const data = resInfo?.data?.cards?.[2]?.card?.card?.info || {};
   const itemCards =
     resInfo?.data?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.[2]
       ?.card?.card?.itemCards || [];
-
   const itemCards1 =
     resInfo?.data?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards || [];
   // console.log("itemCards1",itemCards1)
-
   // const recommendedArray = itemCards1.filter(
   //   (el) => el.card.card.title == "Recommended"
   // );
@@ -34,7 +28,6 @@ const ResturantMenuPage = () => {
   );
   // console.log("recommendedArray", recommendedArray);
   // console.log("recommendedArray", recommendedArray[0].card.card.itemCards);
-
   const topPick =
     resInfo?.data?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1].card
       .card.carousel || [];
@@ -45,7 +38,6 @@ const ResturantMenuPage = () => {
         <div className="tab active">Order Online</div>
         <div className="tab">Dineout</div>
       </nav>
-
       <section className="card1" aria-label="Restaurant info">
         <div className="card-inner">
           {/* Rating row */}
@@ -60,14 +52,11 @@ const ResturantMenuPage = () => {
             <span className="dot">•</span>
             <span className="meta">{data.costForTwoMessage}</span>
           </div>
-
           {/* Cuisines */}
           <div className="cuisines">
             <a href="#">{data.name}</a>, <a href="#">Asian</a>
           </div>
-
           <div className="divider"></div>
-
           {/* Timeline */}
           <div className="timeline">
             {/* Outlet */}
@@ -88,7 +77,6 @@ const ResturantMenuPage = () => {
                 </ul>
               </details>
             </div>
-
             {/* ETA */}
             <div className="tl-line" style={{ position: "relative" }}>
               <span className="tl-dot" style={{ top: 0 }}></span>
@@ -113,9 +101,7 @@ const ResturantMenuPage = () => {
           ))}
         </div>
       </section>
-
       {/* // ------------------------------------End top pick------------------------------ */}
-
       {/*-----------------------------------------Recommended------------------------------------- */}
       {/* {recommendedArray[0].card.card.map((response, index) => ( */}
       {/* <RecommendedCard  recommendedRes={recommendedArray[0].card.card} /> */}
@@ -125,5 +111,4 @@ const ResturantMenuPage = () => {
     </div>
   );
 };
-
 export default ResturantMenuPage;

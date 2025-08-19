@@ -1,5 +1,3 @@
-
-
 function ShimmerCard() {
   return (
     <div className="res-card shimmer-card">
