@@ -41,6 +41,7 @@ const Header = () => {
           </li>
           <li>
             <button
+              name="Login"
               style={{ padding: "5px 10px", cursor: "pointer" }}
               onClick={() => {
                 btnName == "login" ? setbtnName("logout") : setbtnName("login");
