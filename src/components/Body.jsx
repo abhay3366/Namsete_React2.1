@@ -123,6 +123,7 @@ const Body = () => {
               ) : (
                 <RestaurantCard resData={res} />
               )}
+              {/* {console.log("resData",res)} */}
             </Link>
           );
         })}
