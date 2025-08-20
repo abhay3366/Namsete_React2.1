@@ -4,6 +4,57 @@ import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import userContext from "../utils/userContext";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
+
+import { FaCartArrowDown } from "react-icons/fa";
+import { FaCircle } from "react-icons/fa";
+import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
+const HeaderDiv = styled.div`
+  &.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  img {
+    width: 150px;
+  }
+`;
+
+const NavItem = styled.div`
+  &.nav-item {
+    ul {
+      display: flex;
+      list-style: none;
+      gap: 15px;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      a {
+        text-decoration: none;
+        color: black;
+        &:hover {
+          color: #4caf50;
+        }
+      }
+      button {
+        padding: 5px 10px;
+        cursor: pointer;
+        border: none;
+        background-color: #4caf50;
+        color: white;
+        border-radius: 4px;
+        &:hover {
+          background-color: #45a049;
+        }
+      }
+    }
+  }
+`;
 
 const Header = () => {
   const [btnName, setbtnName] = useState("Login");
@@ -15,11 +66,11 @@ const Header = () => {
   const cartItem = useSelector((store) => store.cart.items);
   // console.log(cartItem)
   return (
-    <div className="header">
+    <HeaderDiv className="header">
       <div>
-        <img src={LOGO_URL} style={{ width: "150px" }} alt="Swiggy Logo" />
+        <img src={LOGO_URL} alt="Swiggy Logo" />
       </div>
-      <div className="nav-item">
+      <NavItem className="nav-item">
         <ul>
           <li>
             <Link to="/">Home</Link>
@@ -37,24 +88,46 @@ const Header = () => {
             <Link to="/grocerry">Grocerry</Link>
           </li>
           <li>
-            <Link to="/cart">Cart {cartItem.length}</Link>
+            <Link to="/cart">
+              <FaCartArrowDown /> {cartItem.length}
+            </Link>
           </li>
+
           <li>
             <button
-              name="Login"
               style={{ padding: "5px 10px", cursor: "pointer" }}
               onClick={() => {
-                btnName == "login" ? setbtnName("logout") : setbtnName("login");
+                btnName === "Login"
+                  ? setbtnName("Logout")
+                  : setbtnName("Login");
               }}
             >
-              {btnName}
+              {btnName === "Login" ? (
+                <>
+                  <FaSignInAlt style={{ marginRight: "5px" }} /> Login
+                </>
+              ) : (
+                <>
+                  <FaSignOutAlt style={{ marginRight: "5px" }} /> Logout
+                </>
+              )}
             </button>
           </li>
-          <li>{onlineStatus == true ? "Online" : "Offline"}</li>
-          <li>{loggedInUser}</li>
+
+          <li>
+            {onlineStatus ? (
+              <FaCircle size={20} color="green" />
+            ) : (
+              <FaCircle size={20} color="red" />
+            )}
+          </li>
+
+          <li>
+            <FaUser style={{ marginRight: "5px" }} /> {loggedInUser}
+          </li>
         </ul>
-      </div>
-    </div>
+      </NavItem>
+    </HeaderDiv>
   );
 };
 

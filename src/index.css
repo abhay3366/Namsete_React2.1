@@ -1,4 +1,8 @@
 
+*{
+  text-decoration: none !important;
+}
+
 /* Hide scrollbar but keep scrolling */
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
@@ -373,12 +377,12 @@
     margin-top:8px;
     display:flex; gap:10px; flex-wrap:wrap;
   }
-  .cuisines a{
+ 
+ .cuisines a{
     color:#e11d48; /* rose-600 */
     text-decoration:underline;
     text-underline-offset:2px;
   }
-
   /* Divider */
   .divider{
     height:1px; background:var(--border); margin:14px 0;
