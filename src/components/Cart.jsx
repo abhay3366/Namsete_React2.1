@@ -55,7 +55,7 @@ const Cart = () => {
             Remove All Item 
           </ClearButton>
           {itemCards.map((item, i) => (
-            <ItemCard item={item} key={i} cardType={"cart"} />
+            <ItemCard item={item} key={i} keyData={i} cardType={"cart"} />
           ))}
         </>
       ) : (

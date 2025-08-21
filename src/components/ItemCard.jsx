@@ -81,8 +81,8 @@ const DeleteCartButton = styled.button`
 
 `;
 
-const ItemCard = ({ item, i,cardType }) => {
-  console.log(cardType)
+const ItemCard = ({ item,i, keyData,cardType }) => {
+  console.log("keydata",keyData)
   const dispatch = useDispatch();
   return (
     <CardWrapper key={i}>
@@ -100,7 +100,9 @@ const ItemCard = ({ item, i,cardType }) => {
             alt={item.card.info.name}
           />
         </ImageWrapper>
-        {CartButton==' !cart' ? <CartButton onClick={() => dispatch(addItem())}>Cart</CartButton>:  <DeleteCartButton onClick={()=>{dispatch(deleteCartItem())}}>   <MdDelete size={24} color={'red'} background={"white"}  /></DeleteCartButton>}
+        {cardType==' !cart' ? <CartButton onClick={() => dispatch(addItem())}>Cart</CartButton>:  
+        
+        <DeleteCartButton onClick={()=>{dispatch(deleteCartItem(keyData))}}>   <MdDelete size={24} color={'red'} background={"white"}  /></DeleteCartButton>}
       
       </CardContent>
     </CardWrapper>
