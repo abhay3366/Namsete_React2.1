@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartSlice";
 import styled from "styled-components";
+import { addItemCart, showSuccess } from "../utils/toasterService";
 
 // Wrapper for all items
 const AccordionWrapper = styled.div`
@@ -105,7 +106,10 @@ const Accordion = ({ itemCards, openIndex1, index }) => {
                 alt={item.card.info.name}
               />
 
-              <CartButton onClick={() => dispatch(addItem(item))}>
+              <CartButton onClick={() => {
+                addItemCart('1 Item added to the cart')
+                dispatch(addItem(item))
+                }}>
                 Add to Cart
               </CartButton>
             </ItemContent>

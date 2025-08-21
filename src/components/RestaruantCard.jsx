@@ -132,7 +132,7 @@ const RestaurantCard = ({ resData }) => {
         <h5 className="res-rating">⭐ {avgRating}</h5>
         <h6 className="res-price">💰 {price}</h6>
         <p className="res-description">{cuisines.join(", ")}</p>
-        <Button className="res-btn">Order Now</Button>
+        {/* <Button className="res-btn">Order Now</Button> */}
       </Content>
     </Card>
   );

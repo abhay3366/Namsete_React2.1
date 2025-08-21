@@ -1,5 +1,6 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -10,6 +11,7 @@ import Error from "./components/Error";
 import ResturantMenuPage from "./components/ResturantMenuPage";
 import { lazy, Suspense } from "react";
 import Cart from "./components/Cart";
+import { ToastContainer } from "react-toastify";
 
 const Grocerry=lazy(()=>import("./components/Grocerry"))
 
@@ -67,7 +69,12 @@ const appRouter = createBrowserRouter([
 
 
 const App = () => {
-  return <RouterProvider router={appRouter} />;
+   return (
+    <>
+      <RouterProvider router={appRouter} />
+      <ToastContainer />
+    </>
+  );
 };
 
 export default App;

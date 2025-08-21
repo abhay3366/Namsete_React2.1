@@ -70,8 +70,8 @@ const AccordionContent = styled.div`
 `;
 
 const RecommendedCard = ({ recommendedRes }) => {
-  const [openIndex1, setOpenIndex1] = useState(0);
-  const [index, setIndex] = useState();
+  const [openIndex1, setOpenIndex1] = useState(1);
+  const [index, setIndex] = useState(0);
 
   const toggle2 = (i) => {
     setIndex(i);
