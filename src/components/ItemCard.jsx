@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
-import { addItem } from "../utils/cartSlice";
+import { addItem, deleteCartItem } from "../utils/cartSlice";
 import styled from "styled-components";
+import { MdDelete } from "react-icons/md";
 
 const CardWrapper = styled.div`
   margin-bottom: 1rem;
@@ -66,8 +67,22 @@ const CartButton = styled.button`
     background-color: #1e40af; /* darker blue */
   }
 `;
+const DeleteCartButton = styled.button`
+   backgroundColor: "white",
+  color: red;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  align-self: center;
+  height: fit-content;
 
-const ItemCard = ({ item, i }) => {
+
+`;
+
+const ItemCard = ({ item, i,cardType }) => {
+  console.log(cardType)
   const dispatch = useDispatch();
   return (
     <CardWrapper key={i}>
@@ -85,7 +100,8 @@ const ItemCard = ({ item, i }) => {
             alt={item.card.info.name}
           />
         </ImageWrapper>
-        <CartButton onClick={() => dispatch(addItem())}>Cart</CartButton>
+        {CartButton==' !cart' ? <CartButton onClick={() => dispatch(addItem())}>Cart</CartButton>:  <DeleteCartButton onClick={()=>{dispatch(deleteCartItem())}}>   <MdDelete size={24} color={'red'} background={"white"}  /></DeleteCartButton>}
+      
       </CardContent>
     </CardWrapper>
   );

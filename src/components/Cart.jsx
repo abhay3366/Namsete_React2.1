@@ -52,10 +52,10 @@ const Cart = () => {
       {itemCards.length > 0 ? (
         <>
           <ClearButton onClick={() => dispatch(clearCart())}>
-            Clear Cart
+            Remove All Item 
           </ClearButton>
           {itemCards.map((item, i) => (
-            <ItemCard item={item} key={i} />
+            <ItemCard item={item} key={i} cardType={"cart"} />
           ))}
         </>
       ) : (
