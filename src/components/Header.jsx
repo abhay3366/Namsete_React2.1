@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { LOGO_URL } from "../utils/contants";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
@@ -6,10 +6,10 @@ import userContext from "../utils/userContext";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { FaCartArrowDown } from "react-icons/fa";
-import { FaCircle } from "react-icons/fa";
-import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
+import { FaCartArrowDown, FaCircle, FaUser } from "react-icons/fa";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../utils/firebase";
+
 const HeaderDiv = styled.div`
   &.header {
     display: flex;
@@ -57,14 +57,36 @@ const NavItem = styled.div`
 `;
 
 const Header = () => {
-  const [btnName, setbtnName] = useState("Login");
-
   const onlineStatus = useOnlineStatus();
-
+  const [loginName, setLoginName] = useState("");
   const { loggedInUser } = useContext(userContext);
-
   const cartItem = useSelector((store) => store.cart.items);
-  // console.log(cartItem)
+
+  // Logout function
+  const logout = () => {
+    console.log("Logging out...");
+    signOut(auth)
+      .then(() => {
+        window.location.href = "/";
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Track Firebase auth state
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        console.log("dd",currentUser.displayName)
+        setLoginName(currentUser.displayName);
+      } else {
+        setLoginName(null);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
   return (
     <HeaderDiv className="header">
       <div>
@@ -92,28 +114,9 @@ const Header = () => {
               <FaCartArrowDown /> {cartItem.length}
             </Link>
           </li>
-
           <li>
-            <button
-              style={{ padding: "5px 10px", cursor: "pointer" }}
-              onClick={() => {
-                btnName === "Login"
-                  ? setbtnName("Logout")
-                  : setbtnName("Login");
-              }}
-            >
-              {btnName === "Login" ? (
-                <>
-                  <FaSignInAlt style={{ marginRight: "5px" }} /> Login
-                </>
-              ) : (
-                <>
-                  <FaSignOutAlt style={{ marginRight: "5px" }} /> Logout
-                </>
-              )}
-            </button>
+            <button onClick={logout}>Logout</button>
           </li>
-
           <li>
             {onlineStatus ? (
               <FaCircle size={20} color="green" />
@@ -121,9 +124,8 @@ const Header = () => {
               <FaCircle size={20} color="red" />
             )}
           </li>
-
           <li>
-            <FaUser style={{ marginRight: "5px" }} /> {loggedInUser}
+            <FaUser style={{ marginRight: "5px" }} /> {loginName || "Guest"}
           </li>
         </ul>
       </NavItem>

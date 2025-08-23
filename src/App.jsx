@@ -9,11 +9,14 @@ import Contact from "./components/Contact";
 import News from "./components/News";
 import Error from "./components/Error";
 import ResturantMenuPage from "./components/ResturantMenuPage";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import Cart from "./components/Cart";
 import { ToastContainer } from "react-toastify";
+import LoginSignup from "./components/LoginSignup";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./utils/firebase";
 
-const Grocerry=lazy(()=>import("./components/Grocerry"))
+const Grocerry = lazy(() => import("./components/Grocerry"));
 
 const AppLayout = () => {
   return (
@@ -46,7 +49,7 @@ const appRouter = createBrowserRouter([
         path: "/news",
         element: <News />,
       },
-       {
+      {
         path: "/cart",
         element: <Cart />,
       },
@@ -67,12 +70,32 @@ const appRouter = createBrowserRouter([
   },
 ]);
 
-
 const App = () => {
-   return (
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false); 
+    });
+  }, []);
+
+  if(loading){
+   return <p>Loading...</p>
+  }
+
+  return (
     <>
-      <RouterProvider router={appRouter} />
-      <ToastContainer />
+      {!user ? (
+        <LoginSignup />
+      ) : (
+        <>
+          <RouterProvider router={appRouter} />
+          <ToastContainer />
+        </>
+      )}
+     
     </>
   );
 };

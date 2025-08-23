@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import NotConnectedInternet from "./NotConnectedInternet";
 import styled from "styled-components";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 // Styled components
 const BodyDiv = styled.div`
@@ -74,6 +76,8 @@ const Body = () => {
   const onlineStatus = useOnlineStatus();
 
   const ResturantGoodRating = withGoodRatingLabel(RestaurantCard);
+
+ 
 
   useEffect(() => {
     if (onlineStatus === true) {
