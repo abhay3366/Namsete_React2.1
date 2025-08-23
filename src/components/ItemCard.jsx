@@ -92,7 +92,7 @@ const ItemCard = ({ item,i, keyData,cardType }) => {
           <Price>
             Rs. {(item.card.info.price || item.card.info.defaultPrice) / 100}
           </Price>
-          <Description>{item.card.info.description}</Description>
+          <Description> {item.card.info.description}</Description>
         </InfoWrapper>
         <ImageWrapper>
           <ItemImage
