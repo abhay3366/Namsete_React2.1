@@ -1,20 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import styled from "styled-components";
+import { FaPlus, FaMinus, FaTimes } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import ItemCard from "./ItemCard";
 import { clearCart } from "../utils/cartSlice";
-import styled from "styled-components";
+import ItemCard1 from "./ItemCard1";
 
-const CartWrapper = styled.div`
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 1rem;
+const CartContainer = styled.div`
+  width: 90%;
+  max-width: 900px;
+  margin: 20px auto;
 `;
 
-const Heading = styled.h1`
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  text-align: center;
+const CartTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  th,
+  td {
+    padding: 10px;
+    text-align: left;
+  }
+  th {
+    border-bottom: 2px solid #ccc;
+  }
+  td img {
+    width: 60px;
+    margin-right: 10px;
+  }
 `;
 
 const ClearButton = styled.button`
@@ -33,35 +45,95 @@ const ClearButton = styled.button`
     background-color: #b91c1c; /* red-700 */
   }
 `;
-
-const EmptyMessage = styled.p`
-  font-size: 1.1rem;
-  text-align: center;
-  color: #6b7280; /* gray-500 */
-  margin-top: 2rem;
+const SummaryRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
 `;
+const Summary = styled.div`
+  margin-top: 30px;
+  width: 300px;
+  margin-left: auto;
+  font-size: 16px;
+`;
+const CheckoutButton = styled.button`
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  background-color: black;
+  color: white;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 5px;
 
-const Cart = () => {
+  &:hover {
+    background-color: #333;
+  }
+`;
+const Cart = ({ items }) => {
+  const [allTotals, setAllTotals] = useState([]);
   const dispatch = useDispatch();
   const itemCards = useSelector((store) => store.cart.items);
 
   return (
-    <CartWrapper>
-      <Heading>🛒 Cart</Heading>
-
-      {itemCards.length > 0 ? (
-        <>
-          <ClearButton onClick={() => dispatch(clearCart())}>
-            Remove All Item 
-          </ClearButton>
-          {itemCards.map((item, i) => (
-            <ItemCard item={item} key={i} keyData={i} cardType={"cart"} />
-          ))}
-        </>
-      ) : (
-        <EmptyMessage>Your cart is empty</EmptyMessage>
-      )}
-    </CartWrapper>
+    <CartContainer>
+      <ClearButton onClick={() => dispatch(clearCart())}>
+        Remove All Item
+      </ClearButton>
+      {/* <CartTitle>Your Cart ({items.length} items)</CartTitle> */}
+      <CartTable>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {itemCards.length === 0 ? (
+            <tr>
+              <td colSpan={4} style={{ textAlign: "center" }}>
+                Your cart is empty
+              </td>
+            </tr>
+          ) : (
+            itemCards.map((item, i) => (
+              <ItemCard1
+                item={item}
+                key={i}
+                keyData={i}
+                cardType={"cart"}
+                setAllTotals={setAllTotals}
+              />
+            ))
+          )}
+        </tbody>
+      </CartTable>
+      <div>
+        <Summary>
+        {/* <SummaryRow>
+          <span>Subtotal:</span>
+          <span>$1,019.98</span>
+        </SummaryRow> */}
+        {/* <SummaryRow>
+          <span>Sales Tax:</span>
+          <span>$102.00</span>
+        </SummaryRow>
+        <SummaryRow>
+          <span>Coupon Code:</span>
+          <span>Add Coupon</span>
+        </SummaryRow> */}
+        <SummaryRow style={{ fontWeight: "bold", fontSize: "20px" }}>
+          <span>Grand Total:</span>
+          <span>Rs {allTotals.reduce((acc, val) => acc + val, 0)}</span>
+        </SummaryRow>
+        <CheckoutButton>Check Out</CheckoutButton>
+      </Summary>
+      </div>
+      <div></div>
+    </CartContainer>
   );
 };
 
