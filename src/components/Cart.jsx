@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ItemCard from "./ItemCard";
 import { clearCart } from "../utils/cartSlice";
 import ItemCard1 from "./ItemCard1";
+import EmptyCartCard from "./EmptyCartCard";
 
 const CartContainer = styled.div`
   width: 90%;
@@ -76,12 +77,13 @@ const Cart = ({ items }) => {
   const dispatch = useDispatch();
   const itemCards = useSelector((store) => store.cart.items);
 
-  return (
+  return itemCards.length==0 ? <EmptyCartCard/>: (
     <CartContainer>
       <ClearButton onClick={() => dispatch(clearCart())}>
         Remove All Item
       </ClearButton>
       {/* <CartTitle>Your Cart ({items.length} items)</CartTitle> */}
+      
       <CartTable>
         <thead>
           <tr>
@@ -106,7 +108,6 @@ const Cart = ({ items }) => {
                 keyData={i}
                 cardType={"cart"}
                 setAllTotals={setAllTotals}
-                
               />
             ))
           )}
@@ -114,24 +115,12 @@ const Cart = ({ items }) => {
       </CartTable>
       <div>
         <Summary>
-        {/* <SummaryRow>
-          <span>Subtotal:</span>
-          <span>$1,019.98</span>
-        </SummaryRow> */}
-        {/* <SummaryRow>
-          <span>Sales Tax:</span>
-          <span>$102.00</span>
-        </SummaryRow>
-        <SummaryRow>
-          <span>Coupon Code:</span>
-          <span>Add Coupon</span>
-        </SummaryRow> */}
-        <SummaryRow style={{ fontWeight: "bold", fontSize: "20px" }}>
-          <span>Grand Total:</span>
-          <span>Rs {allTotals.reduce((acc, val) => acc + val, 0)}</span>
-        </SummaryRow>
-        <CheckoutButton>Check Out</CheckoutButton>
-      </Summary>
+          <SummaryRow style={{ fontWeight: "bold", fontSize: "20px" }}>
+            <span>Grand Total:</span>
+            <span>Rs {allTotals.reduce((acc, val) => acc + val, 0)}</span>
+          </SummaryRow>
+          <CheckoutButton>Check Out</CheckoutButton>
+        </Summary>
       </div>
       <div></div>
     </CartContainer>
