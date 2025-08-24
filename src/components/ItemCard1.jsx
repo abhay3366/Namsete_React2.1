@@ -30,9 +30,9 @@ const RemoveBtn = styled.button`
     color: red;
   }
 `;
-const ItemCard1 = ({ item, keyData, setAllTotals,cartItems }) => {
+const ItemCard1 = ({ item, keyData, setAllTotals,cartItems,itemCards }) => {
   const [quantity, setQuantity] = useState(1);
-    console.log("cart".cartItems,keyData)
+  
   useEffect(() => {
     const price = !item.card.info.price
       ? item.card.info.defaultPrice
@@ -45,7 +45,7 @@ const ItemCard1 = ({ item, keyData, setAllTotals,cartItems }) => {
       newTotals[keyData] = (price / 100) * quantity; // set current item total
       return newTotals; // return new array
     });
-  }, [quantity, item.card.info.price, item.card.info.defaultPrice, keyData,deleteCartItem,cartItems]);
+  }, [quantity,itemCards, item.card.info.price, item.card.info.defaultPrice, keyData,deleteCartItem,cartItems]);
 
   const dispatch = useDispatch();
   return (
@@ -101,9 +101,14 @@ const ItemCard1 = ({ item, keyData, setAllTotals,cartItems }) => {
             <RemoveBtn
               onClick={() => {
                 dispatch(deleteCartItem(keyData));
+
+                 setAllTotals((prev) => {
+                  const newTotals = [...prev];
+                  newTotals.splice(keyData, 1); // remove this item’s total
+                  return newTotals;
+                });
               }}
             >
-              {" "}
               <FaTimes size={24} color={"red"} background={"white"} />
             </RemoveBtn>
           }

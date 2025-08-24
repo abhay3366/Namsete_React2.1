@@ -106,6 +106,7 @@ const Cart = ({ items }) => {
                 keyData={i}
                 cardType={"cart"}
                 setAllTotals={setAllTotals}
+                
               />
             ))
           )}

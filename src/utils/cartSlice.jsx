@@ -7,10 +7,10 @@ const cartSlice = createSlice({
   },
   reducers: {
     addItem: (state, action) => {
-      console.log(action);
+     
       state.items.push(action.payload);
       localStorage.setItem('cart',JSON.stringify(state.items))
-      console.log("Dta");
+    
     },
     removeItem: (state) => {
       state.items.pop();

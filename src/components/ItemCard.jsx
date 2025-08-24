@@ -82,7 +82,6 @@ const DeleteCartButton = styled.button`
 `;
 
 const ItemCard = ({ item,i, keyData,cardType }) => {
-  console.log("keydata",keyData)
   const dispatch = useDispatch();
   return (
     <CardWrapper key={i}>
